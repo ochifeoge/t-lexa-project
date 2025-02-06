@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Karla:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Karla", sans-serif; /* For body text */
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Cormorant", serif; /* For headers */
+  font-weight: 600; /* Use different weights as needed */
+}
+@layer components {
+  .max-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+}
+
+/* .hero {
+  background: url(/assets/images/heropic.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+
+span.swiper-pagination-bullet {
+  width: 11px;
+  height: 11px;
+}
+span.swiper-pagination-bullet-active {
+  width: 13px;
+  height: 13px;
+}
+
+.shophero {
+  background: url("https://images.pexels.com/photos/6214129/pexels-photo-6214129.jpeg?auto=compress&cs=tinysrgb&w=600");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media (max-width: 1280px) {
+  .hero {
+    background: url(/assets/images/heropic.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

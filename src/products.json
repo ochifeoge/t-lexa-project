@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "image": "https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80",
+    "name": "Apple AirPods",
+    "description": "Enjoy crystal-clear sound and seamless connectivity with Apple's AirPods. Featuring voice-activated Siri access and a wireless charging case, these earbuds offer a high-quality listening experience and extended battery life for all-day use.",
+    "price": 1090,
+    "categories": "Electronics",
+    "inStock": true,
+    "quantity": 50
+  },
+  {
+    "id": "2",
+    "image": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/37ed2821-9881-4a18-b7f4-5b9f1357671f/M+NK+TCH+WVN+OH+PANT.png",
+    "name": "Men Woven Trousers",
+    "description": "Stylish and comfortable, these woven trousers are designed for everyday wear. Featuring a versatile design, they offer both comfort and functionality, making them a perfect addition to your wardrobe.",
+    "price": 150,
+    "categories": "Apparel",
+    "inStock": true,
+    "quantity": 35
+  },
+  {
+    "id": "3",
+    "image": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/f9a844a2-e8c0-4e7e-b5d4-be3e34d194f8/M+NK+TCH+FLC+SHORT.png",
+    "name": "Men's Sports Shorts",
+    "description": "Stay cool and comfortable during workouts or casual outings with these men's sports shorts. Made with breathable fabric, these shorts provide maximum movement and comfort for active lifestyles.",
+    "price": 799,
+    "categories": "Apparel",
+    "inStock": true,
+    "quantity": 40
+  },
+  {
+    "id": "4",
+    "image": "https://media.gucci.com/style/White_South_0_160_316x316/1718386259/810232_AAD5V_1060_003_100_0000_Light-Gucci-Jackie-1961-small-shoulder-bag.jpg",
+    "name": "Gucci Jackie 1961 Small Shoulder Bag",
+    "description": "This luxurious Gucci shoulder bag features the iconic Jackie 1961 design, made from high-quality leather and adorned with a timeless gold-tone hardware. A must-have for any fashion-forward woman looking to elevate her style.",
+    "price": 1899,
+    "categories": "Fashion Accessories",
+    "inStock": true,
+    "quantity": 25
+  },
+  {
+    "id": "5",
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/77ad16c3-f29e-4ab7-9bba-36119041fda5/W+NSW+TCH+FLC+MR+JGGER+2.png",
+    "name": "Women's Tech Fleece Joggers",
+    "description": "These women's joggers are crafted from Nike's premium Tech Fleece material, ensuring warmth and lightweight comfort. Perfect for casual wear or lounging, they offer a modern, athletic look.",
+    "price": 2067,
+    "categories": "Apparel",
+    "inStock": true,
+    "quantity": 60
+  },
+  {
+    "id": "6",
+    "image": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5b4417c6-4ac6-4c28-b6c1-14310053133b/M+NK+TCH+FLC+JGGR.png",
+    "name": "Men's Joggers",
+    "description": "Upgrade your wardrobe with these men's joggers from Nike. Featuring a comfortable and breathable fabric, these joggers are perfect for both lounging and active use, offering a sleek, stylish look.",
+    "price": 3499,
+    "categories": "Apparel",
+    "inStock": true,
+    "quantity": 45
+  },
+  {
+    "id": "7",
+    "image": "https://m.media-amazon.com/images/I/51jKdIMGCsL._AC_UY218_.jpg",
+    "name": "Xbox Console",
+    "description": "Elevate your gaming experience with the Xbox console. Featuring powerful hardware and a vast library of games, this console is the ultimate choice for any gamer looking for high-quality performance and immersive gameplay.",
+    "price": 2400,
+    "categories": "Gaming",
+    "inStock": true,
+    "quantity": 15
+  },
+  {
+    "id": "8",
+    "image": "https://m.media-amazon.com/images/I/712KUaxD9+L._AC_SX425_.jpg",
+    "name": "Turtle Beach Stealth 700 Wireless Headset",
+    "description": "Experience next-level sound and comfort with the Turtle Beach Stealth 700 wireless headset. Designed for gaming, it features high-quality audio, a comfortable fit, and a built-in mic for clear communication with your teammates.",
+    "price": 3599,
+    "categories": "Electronics",
+    "inStock": true,
+    "quantity": 30
+  },
+  {
+    "id": "9",
+    "image": "https://m.media-amazon.com/images/I/71u0gQqEQSL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
+    "name": "LTGEM Hard Case for Turtle Beach Stealth 700",
+    "description": "Protect your Turtle Beach Stealth 700 headset with this durable hard case. Crafted from high-quality materials, it ensures your headset stays safe from scratches, dust, and accidental damage during travel.",
+    "price": 2899,
+    "categories": "Accessories",
+    "inStock": true,
+    "quantity": 50
+  }
+]
