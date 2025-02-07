@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# keys
+# files to ignore
 .env
+Firebase.js
