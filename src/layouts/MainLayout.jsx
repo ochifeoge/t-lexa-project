@@ -1,21 +1,13 @@
 import Navbar from "../sections/Navbar";
 import Footer from "../sections/Footer";
-import { Outlet, useLocation } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
-  const location = useLocation();
-
-  const isAdminRoute = location.pathname.startsWith("/admin");
-
-  return (
+   return (
     <>
-      {/* Conditionally render Navbar and Footer */}
-      {!isAdminRoute && <Navbar />}
+      <Navbar />
       <Outlet />
-      {!isAdminRoute && <Footer />}
-      <ToastContainer />
+      <Footer />
     </>
   );
 };

@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MainLayout from "./layouts/MainLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
@@ -19,6 +21,7 @@ import AddProducts from "./pages/AddProducts.jsx";
 import { productLoader } from "./components/productLoader.js";
 import AdminPanel from "./ADMIN/AdminPanel.jsx";
 import AdminRoute from "./ADMIN/AdminRoute.jsx";
+import AdminLayout from "./layouts/AdminLayout.jsx";
 import Orders from "./pages/Orders.jsx";
 import UsersProfile from "./pages/UsersProfile.jsx";
 
@@ -32,15 +35,6 @@ const router = createBrowserRouter([
         path: "",
         element: <HomePage />,
       },
-      {
-        path: "/admin",
-        element: (
-          <AdminRoute>
-            <AdminPanel />
-          </AdminRoute>
-        ),
-      },
-
       {
         path: "/registration",
         element: <Registration />,
@@ -84,6 +78,20 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: (
+          <AdminRoute>
+            <AdminPanel />
+          </AdminRoute>
+        ),
+      },
+    ],
+  },
 ]);
 
 const queryClient = new QueryClient();
@@ -93,6 +101,7 @@ createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <Context>
         <RouterProvider router={router} />
+        <ToastContainer />
       </Context>
     </QueryClientProvider>
   </StrictMode>
