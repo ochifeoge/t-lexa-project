@@ -1,4 +1,5 @@
 import { FaUserCircle, FaShoppingBag, FaEnvelope } from "react-icons/fa";
+const baseUrl = import.meta.env.BASE_URL;
 
 export const navlinks = [
   { href: "/", label: "home" },
@@ -8,14 +9,14 @@ export const navlinks = [
   { href: "/blog", label: "blog" },
 ];
 
-export const heroVid = "/assets/videos/herovideo.mp4";
-export const heroPic = "/assets/images/heropic.jpg";
-export const nikeShirt1 = "/assets/images/nikeShirt1.png";
-export const pay = "/assets/images/pay.png";
-export const security = "/assets/images/security.jpg";
-export const tovia = "/assets/images/tovia.jpg";
-export const contactUs = "/assets/images/contact us.jpg";
-export const productHero = "/assets/images/shopproduct.jpg";
+export const heroVid = baseUrl + "/assets/videos/herovideo.mp4";
+export const heroPic = baseUrl + "/assets/images/heropic.jpg";
+export const nikeShirt1 = baseUrl + "/assets/images/nikeShirt1.png";
+export const pay = baseUrl + "/assets/images/pay.png";
+
+export const tovia = baseUrl + "/assets/images/tovia.jpg";
+export const contactUs = baseUrl + "/assets/images/contact us.jpg";
+export const productHero = baseUrl + "/assets/images/shopproduct.jpg";
 
 export const apprasials = [
   {

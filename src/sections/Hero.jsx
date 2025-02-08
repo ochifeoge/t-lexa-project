@@ -1,8 +1,6 @@
-import React from "react";
-import { heroVid, heroPic } from "../components/details";
+import { heroVid } from "../components/details";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Button from "../components/Button";
 
 const Hero = () => {
   useGSAP(() => {
