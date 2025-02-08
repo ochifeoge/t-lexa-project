@@ -26,9 +26,6 @@ import Orders from "./pages/Orders.jsx";
 import UsersProfile from "./pages/UsersProfile.jsx";
 
 const router = createBrowserRouter(
-  {
-    basename: "/t-lexa-project",
-  },
   [
     {
       path: "/",
@@ -96,7 +93,10 @@ const router = createBrowserRouter(
         },
       ],
     },
-  ]
+  ],
+  {
+    basename: "/t-lexa-project",
+  }
 );
 
 const queryClient = new QueryClient();
