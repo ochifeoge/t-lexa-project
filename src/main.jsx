@@ -25,74 +25,79 @@ import AdminLayout from "./layouts/AdminLayout.jsx";
 import Orders from "./pages/Orders.jsx";
 import UsersProfile from "./pages/UsersProfile.jsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
   {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "",
-        element: <HomePage />,
-      },
-      {
-        path: "/registration",
-        element: <Registration />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-      {
-        path: "/products/:id",
-        element: <SingleProductPage />,
-        loader: productLoader,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-      {
-        path: "/profile",
-        element: <UsersProfile />,
-      },
-      {
-        path: "/orders",
-        element: <Orders />,
-      },
-      {
-        path: "/addproducts",
-        element: <AddProducts />,
-      },
-    ],
+    basename: "/t-lexa-project",
   },
+  [
+    {
+      path: "/",
+      element: <MainLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "",
+          element: <HomePage />,
+        },
+        {
+          path: "/registration",
+          element: <Registration />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/shop",
+          element: <Shop />,
+        },
+        {
+          path: "/products/:id",
+          element: <SingleProductPage />,
+          loader: productLoader,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/profile",
+          element: <UsersProfile />,
+        },
+        {
+          path: "/orders",
+          element: <Orders />,
+        },
+        {
+          path: "/addproducts",
+          element: <AddProducts />,
+        },
+      ],
+    },
 
-  {
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "/admin",
-        element: (
-          <AdminRoute>
-            <AdminPanel />
-          </AdminRoute>
-        ),
-      },
-    ],
-  },
-]);
+    {
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "/admin",
+          element: (
+            <AdminRoute>
+              <AdminPanel />
+            </AdminRoute>
+          ),
+        },
+      ],
+    },
+  ]
+);
 
 const queryClient = new QueryClient();
 
