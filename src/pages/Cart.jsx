@@ -36,7 +36,7 @@ const Cart = () => {
               <div>
                 <h3 className="text-xl">{cartItem.name}</h3>
                 <span>
-                  price: <span>&#8358;</span> {cartItem.price * cartItem.qty}
+                  price: <span>&#8358;</span> {cartItem?.price * cartItem?.qty}
                 </span>
                 <div className="flex flex-col md:flex-row md:items-center">
                   <p>Quantity: {cartItem.qty}</p>
@@ -57,9 +57,9 @@ const Cart = () => {
             </div>
           ))
         ) : (
-          <div className="text-center ">
+          <div className="text-center text-2xl ">
             <p>
-              Theres nothing in the cart yet, please purchase goods from the
+              There's nothing in the cart yet, please purchase goods from the
             </p>
             <Link to="/shop" className="text-red-300">
               shop

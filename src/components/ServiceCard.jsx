@@ -2,7 +2,7 @@ import React from "react";
 
 const ServiceCard = ({ label, subText, icon }) => {
   return (
-    <div className=" basis-full  sm:w-[300px] sm:min-w-[300px] md:flex-1 w-full shadow-3xl rounded-[20px] px-10 py-16">
+    <div className=" basis-full  sm:w-[300px] sm:min-w-[300px] md:flex-1 w-full shadow-lg rounded-[20px] px-10 py-16">
       <div className="w-11 h-11 flex justify-center items-center bg-red-500 rounded-full text-white text-lg">
         {icon}
       </div>

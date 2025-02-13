@@ -21,7 +21,7 @@ const AdminPanel = () => {
           className={`${isSidebarOpen ? "md:ml-64" : "md:ml-16"} 
           
           ${isMobile ? "w-full p-2" : ""}
-          shadow-sm overflow-hidden overflow-y-auto transition-all duration-300 `}
+          shadow-sm overflow-hidden overflow-x-scroll overflow-y-auto transition-all duration-300 `}
           style={{}}>
           {renderSection()}
         </main>

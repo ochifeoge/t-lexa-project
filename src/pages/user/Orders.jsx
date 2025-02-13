@@ -1,7 +1,7 @@
 import { useState } from "react";
-import OrderTable from "../components/OrderTable";
-import { CartState } from "../components/Context";
-import Spinners from "../components/Spinners";
+import OrderTable from "../../components/OrderTable";
+import { CartState } from "../../components/Context";
+import Spinners from "../../components/Spinners";
 import { FaFileDownload } from "react-icons/fa";
 import { Tooltip } from "@material-tailwind/react";
 

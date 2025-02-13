@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,13 +19,10 @@ import { doc, setDoc } from "firebase/firestore";
 const Registration = () => {
   /////////////////////// toggle view password////////////////////////////////
   const [showPassword, setShowPassword] = useState(false);
-  const passwordInput = document.querySelector(".password");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const toggleVissibility = () => {
-    setShowPassword((prev) => !prev);
-    passwordInput.type === "password"
-      ? (passwordInput.type = "text")
-      : (passwordInput.type = "password");
+  const toggleVissibility = (setterFn) => {
+    setterFn((prev) => !prev);
   };
 
   //////////////// form validation logic /////////////////////////////
@@ -34,6 +31,10 @@ const Registration = () => {
     fullName: yup
       .string("use a valid name")
       .required("your full name is required"),
+    callNumber: yup
+      .string("please add a number")
+      .min(10, "please input at least 11 digits for NGN numbers")
+      .required("your number is required"),
     email: yup
       .string()
       .email("please use a valid email")
@@ -64,10 +65,13 @@ const Registration = () => {
   /////////////////////// Registration logic /////////////////////////
   const navigate = useNavigate();
 
+  const buttonRef = useRef(null);
+
   const onSubmit = async (data, e) => {
     // data coming from handleSubmit (react hook form)
     e.preventDefault();
     try {
+      buttonRef.current.innerHTML = "PLEASE WAIT, CREATING ACCOUNT...";
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -84,6 +88,7 @@ const Registration = () => {
       const userData = {
         name: data.fullName,
         email: data.email,
+        phoneNumber: data.callNumber,
         isVerified: true,
         role: "customer",
         createdAt: new Date(),
@@ -91,25 +96,36 @@ const Registration = () => {
       // Add data to Firestore
       await setDoc(newUserRef, userData);
     } catch (err) {
-      console.error("Error creating user: ", err); // Log the error for better visibility
-      toast.error("Error: " + err.message);
+      if (err.message === "Firebase: Error (auth/network-request-failed).") {
+        toast.error("Please check your internet connection 🙏");
+      } else if (err.message === "EMAIL_EXISTS") {
+        toast.error("Email already exist");
+      } else if (
+        err.message === "Firebase: Error (auth/email-already-in-use)."
+      ) {
+        toast.error("email already in use");
+      } else {
+        console.error("Error creating user: ", err.message);
+      }
+    } finally {
+      buttonRef.current.innerHTML = "SIGN UP";
     }
   };
 
   return (
-    <section className="mx-auto max-w-[450px] p-12">
+    <section className="mx-auto w-full max-w-[450px] p-6 md:p-12">
       <Card color="transparent" shadow={false}>
         <h3 className="text-3xl">Sign Up </h3>
-        <Typography color="gray" className="mt-1 font-normal">
+        <Typography color="gray" className="mt-1 font-normal text-start">
           Create an account to process payments
         </Typography>
-        <Typography color="gray" className="mt-4 text-center font-normal">
+        <Typography color="gray" className="mt-4 text-start font-normal">
           Already have an account?{" "}
           <Link to="/login" className="font-medium text-gray-900">
             Sign In
           </Link>
         </Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+        <form className="mt-8 mb-2 w-full  max-w-screen-lg ">
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Your Name
@@ -125,6 +141,22 @@ const Registration = () => {
             />
             {errors.fullName && (
               <p className="text-red-900 -mt-3">{errors.fullName.message}</p>
+            )}
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Your Call Number
+            </Typography>
+            <Input
+              size="lg"
+              type="tel"
+              placeholder="+244 90223 41234"
+              {...register("callNumber")}
+              className=" !border-t-blue-gray-200 focus:!border-blue-400"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+            {errors.callNumber && (
+              <p className="text-red-900 -mt-3">{errors.callNumber.message}</p>
             )}
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Your Email
@@ -147,7 +179,7 @@ const Registration = () => {
 
             <div className="relative">
               <Input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 size="lg"
                 placeholder="********"
                 {...register("password")}
@@ -161,12 +193,12 @@ const Registration = () => {
               )}
               {showPassword ? (
                 <FaEye
-                  onClick={toggleVissibility}
+                  onClick={() => toggleVissibility(setShowPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                 />
               ) : (
                 <FaEyeSlash
-                  onClick={toggleVissibility}
+                  onClick={() => toggleVissibility(setShowPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                 />
               )}
@@ -176,7 +208,7 @@ const Registration = () => {
             </Typography>
             <div className="relative">
               <Input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 size="lg"
                 placeholder="Confirm password"
                 {...register("confirmPassword")}
@@ -193,12 +225,12 @@ const Registration = () => {
               )}
               {showPassword ? (
                 <FaEye
-                  onClick={toggleVissibility}
+                  onClick={() => toggleVissibility(setShowConfirmPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                 />
               ) : (
                 <FaEyeSlash
-                  onClick={toggleVissibility}
+                  onClick={() => toggleVissibility(setShowConfirmPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                 />
               )}
@@ -227,7 +259,11 @@ const Registration = () => {
             </p>
           )}
 
-          <Button onClick={handleSubmit(onSubmit)} className="mt-6" fullWidth>
+          <Button
+            ref={buttonRef}
+            onClick={handleSubmit(onSubmit)}
+            className="mt-6"
+            fullWidth>
             Sign up
           </Button>
 

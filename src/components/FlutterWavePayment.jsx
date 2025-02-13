@@ -1,11 +1,9 @@
 import { closePaymentModal, FlutterWaveButton } from "flutterwave-react-v3";
 import { CartState } from "./Context";
 
-import { useEffect, useState } from "react";
 import { db } from "./Firebase";
-import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const FlutterWavePayment = () => {
   const { state, dispatch, userDetails } = CartState();
@@ -27,11 +25,11 @@ const FlutterWavePayment = () => {
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: userDetails.email,
-      phone_number: "070********",
+      phone_number: userDetails.phoneNumber,
       name: userDetails.name,
     },
     customizations: {
-      title: "My store",
+      title: "T-lexa's store",
       description: "Payment for items in cart",
       logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
@@ -63,7 +61,7 @@ const FlutterWavePayment = () => {
           },
           customer: {
             email: userDetails.email,
-            phone_number: "070********",
+            phone_number: userDetails.phoneNumber,
             name: userDetails.name,
           },
           products: cart.map((item) => ({
@@ -109,15 +107,8 @@ const FlutterWavePayment = () => {
   };
 
   return (
-    <div>
-      <FlutterWaveButton
-        style={{
-          background: "green",
-          color: "blue",
-          padding: "10px 17px",
-        }}
-        {...fwConfig}
-      />
+    <div className="bg-green-500 w-max mx-auto px-3 cursor-pointer text-center py-2 text-xl rounded font-bold text-white">
+      <FlutterWaveButton {...fwConfig} />
     </div>
   );
 };

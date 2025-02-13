@@ -138,7 +138,7 @@ const ManageProducts = () => {
   const paginationModel = { page: 0, pageSize: 10 };
   return (
     <div>
-      <Paper sx={{ height: "80vh", width: "100%" }}>
+      <Paper sx={{ height: "80vh", width: "100%", overflowX: "auto" }}>
         <DataGrid
           rows={rows}
           columns={columns}

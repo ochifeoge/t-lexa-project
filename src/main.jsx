@@ -22,8 +22,10 @@ import { productLoader } from "./components/productLoader.js";
 import AdminPanel from "./ADMIN/AdminPanel.jsx";
 import AdminRoute from "./ADMIN/AdminRoute.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
-import Orders from "./pages/Orders.jsx";
-import UsersProfile from "./pages/UsersProfile.jsx";
+import Orders from "./pages/user/Orders.jsx";
+import UsersProfile from "./pages/user/UsersProfile.jsx";
+import EditUserProfile from "./pages/user/EditUserProfile.jsx";
+import ErrorPageAdmin from "./ADMIN/ErrorPageAdmin.jsx";
 
 const router = createBrowserRouter(
   [
@@ -74,6 +76,10 @@ const router = createBrowserRouter(
           element: <Orders />,
         },
         {
+          path: "/edit-profile",
+          element: <EditUserProfile />,
+        },
+        {
           path: "/addproducts",
           element: <AddProducts />,
         },
@@ -82,6 +88,7 @@ const router = createBrowserRouter(
 
     {
       element: <AdminLayout />,
+      errorElement: <ErrorPageAdmin />,
       children: [
         {
           path: "/admin",

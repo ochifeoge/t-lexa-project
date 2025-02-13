@@ -5,18 +5,18 @@ import {
   CardFooter,
   Typography,
 } from "@material-tailwind/react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "./Button";
 
-import { FaCartShopping } from "react-icons/fa6";
+import {} from "react-icons/fa6";
 
 /* description = " With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case.", */
 
 export function EcommerceCard({ product }) {
   return (
-    <Card className="w-full p-2">
-      <Link to={`/products/${product.id}`}>
-        <CardHeader shadow={true} floated={false} className="h-64">
+    <Card className="w-full ">
+      <Link className="p-0" to={`/products/${product.id}`}>
+        <CardHeader shadow={true} floated={false} className="h-36  md:h-64">
           <img
             src={product.image}
             alt={product.name}

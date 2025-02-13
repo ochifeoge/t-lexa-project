@@ -42,7 +42,10 @@ const SingleProductPage = () => {
       <div className="lg:w-[45%]">
         <div className="flex flex-col items-center lg:items-start gap-4 my-5">
           <h3 className="text-lg">{product.categories}</h3>
-          <h1 className="font-bold text-4xl">${product.price}</h1>
+          <h1 className="font-bold text-4xl">
+            <span>&#8358;</span>
+            {product.price}
+          </h1>
         </div>
 
         <div className="w-4/6">
@@ -60,7 +63,7 @@ const SingleProductPage = () => {
             label={"  Select Amount"}
             desc=" Adjust the amount using the + and - controls."
           />
-          <Button label="Add to Card" />
+          <Button label="Add to cart" />
         </div>
         <div className="my-5">
           <h3 className="text-xl">Product Detals</h3>

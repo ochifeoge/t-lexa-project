@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { navlinks } from "../components/details";
-import { FaBars, FaCartShopping, FaCircleUser } from "react-icons/fa6";
+import { FaBars, FaCartShopping } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import { Badge } from "@material-tailwind/react";
 import { CartState } from "../components/Context";
-import LogOut from "../components/LogOut";
 import Dropdown from "../components/Dropdown";
 import { FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
-  const { state, isAdmin } = CartState();
+  const { state } = CartState();
 
   const cart = state.cart;
   const user = state.user;

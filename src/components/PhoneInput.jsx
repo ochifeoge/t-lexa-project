@@ -1,13 +1,26 @@
-import { Input, Typography } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 import { CartState } from "./Context";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function PhoneInput() {
   const { userDetails } = CartState();
+  console.log(userDetails.phoneNumber);
+  const [editPhoneError, setEditPhoneError] = useState(false);
+
+  const handleBlur = (e) => {
+    if (!e.relatedTarget || !e.relatedTarget.closest("a")) {
+      setEditPhoneError(false);
+    }
+  };
+
   return (
-    <div className="w-96">
+    <div className="w-[90vw] md:w-96">
       <Input
         maxLength={16}
-        value={userDetails.phone}
+        value={userDetails.phoneNumber}
+        onChange={() => setEditPhoneError(true)}
+        onBlur={handleBlur}
         label="Call Number"
         placeholder="e.g., +234 903 2233 223 "
         pattern="^\+234\s\d{3}\s\d{3}\s\d{4}$"
@@ -26,6 +39,18 @@ function PhoneInput() {
           </svg>
         }
       />
+      {editPhoneError && (
+        <div>
+          <p className="text-red-300 mt-1 mb-2">
+            You can only change this number from you profile
+          </p>
+          <Link
+            className="bg-green-500 text-white mx-auto py-2 px-4 rounded "
+            to="/edit-profile">
+            Click to change
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
