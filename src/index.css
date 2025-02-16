@@ -23,7 +23,7 @@ h3 {
   .max-container {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 5rem;
   }
 }
 
@@ -55,5 +55,13 @@ span.swiper-pagination-bullet-active {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 500px) {
+  @layer components {
+    .max-container {
+      padding: 2rem;
+    }
   }
 }

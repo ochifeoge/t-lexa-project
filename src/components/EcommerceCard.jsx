@@ -19,6 +19,7 @@ export function EcommerceCard({ product }) {
         <CardHeader shadow={true} floated={false} className="h-36  md:h-64">
           <img
             src={product.image}
+            loading="lazy"
             alt={product.name}
             className={`h-full w-full object-cover rounded-md`}
             style={{
@@ -40,7 +41,7 @@ export function EcommerceCard({ product }) {
         </div>
       </CardBody>
       <CardFooter className="pt-1 px-2 ">
-        <Button label="Add TO Cart" product={product} />
+        <Button label="Add to cart" product={product} />
       </CardFooter>
     </Card>
   );

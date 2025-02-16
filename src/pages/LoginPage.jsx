@@ -62,14 +62,22 @@ const Login = () => {
   };
 
   return (
-    <section className="mx-auto max-w-[450px] p-12">
+    <section className="mx-auto w-screen max-w-[450px] p-4 md:p-12">
       <Card color="transparent" shadow={false}>
         <h3 className="text-3xl">Login </h3>
         <Typography color="gray" className="mt-1 font-normal">
           Welcome Back
         </Typography>
+        <Typography color="gray" className="mt-4  ">
+          Dont have an account ?
+          <Link
+            to="/registration"
+            className=" ps-1 tracking-tight font-semibold text-blue-gray-800">
+            Click to create an account
+          </Link>
+        </Typography>
 
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+        <form className="mt-8 mb-2 w-full md:w-80 max-w-screen-lg sm:w-96">
           <div className="mb-4 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Your Email
@@ -123,16 +131,10 @@ const Login = () => {
           <Button ref={loginBtnRef} onClick={handleSubmit(login)}>
             Login
           </Button>
-          <Typography color="gray" className="mt-4  font-normal">
-            Dont have an account ?
-            <Link to="/registration" className="font-medium text-gray-900">
-              Create an account
-            </Link>
-          </Typography>
 
-          <Typography color="gray" className="mt-4  font-normal">
+          <Typography color="gray" className="mt-4   font-normal">
             Fogort password?
-            <Link to="/registration" className="font-medium text-gray-900">
+            <Link to="/registration" className=" text-blue-gray-800">
               Recover account
             </Link>
           </Typography>

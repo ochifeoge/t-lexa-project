@@ -21,12 +21,12 @@ const CartContext = createContext();
 
 const Context = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, {
-    cart: JSON.parse(localStorage.getItem("cart")) || [],
+    cart: JSON.parse(localStorage.getItem("T-lexa's-shop-cart")) || [],
     user: null,
   });
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(state.cart));
+    localStorage.setItem("T-lexa's-shop-cart", JSON.stringify(state.cart));
   }, [state.cart]);
 
   /////////FETCH PRODUCT AND PASS IT TO THE LOCAL STATE ///////////////////
@@ -43,8 +43,6 @@ const Context = ({ children }) => {
     isError,
     refetch,
   } = useQuery(["products"], fetchProducts);
-
-  useEffect(() => {}, [products]);
 
   /*   if (products && state.products.length === 0) {
     dispatch({ type: "SET_PRODUCTS", payload: products });

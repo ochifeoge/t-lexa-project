@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-
+import { CartState } from "../../components/Context";
+import { useState } from "react";
 const UsersProfile = () => {
+  const { userDetails } = CartState();
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(userDetails);
   const [name, setName] = useState("ochife");
   const [callNumber, setCallNumber] = useState("0909662652");
   const [email, setEmail] = useState("ochife@oge.com");
@@ -11,7 +13,7 @@ const UsersProfile = () => {
       <section>
         <div className="text-center">Profile Details</div>
 
-        {loading ? (
+        {!userDetails ? (
           <h1>loading...</h1>
         ) : (
           <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -27,7 +29,7 @@ const UsersProfile = () => {
                   type="text"
                   id="profile-name"
                   onChange={(e) => setName(e.target.value)}
-                  value={name}
+                  value={userDetails?.name}
                   required
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter profile name"
@@ -44,7 +46,7 @@ const UsersProfile = () => {
                   type="tel"
                   id="profile-number"
                   onChange={(e) => setCallNumber(e.target.value)}
-                  value={callNumber}
+                  value={userDetails?.phoneNumber}
                   required
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter price"
@@ -61,7 +63,7 @@ const UsersProfile = () => {
                   type="email"
                   id="profile-email"
                   onChange={(e) => setEmail(e.target.value)}
-                  value={email}
+                  value={userDetails?.email}
                   required
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter mail"

@@ -6,7 +6,7 @@ export const navlinks = [
   { href: "/shop", label: "shop" },
   { href: "/about", label: "about us" },
   { href: "/contact", label: "contact" },
-  { href: "/blog", label: "blog" },
+  /*  { href: "/blog", label: "blog" }, */
 ];
 
 export const heroVid = baseUrl + "/assets/videos/herovideo.mp4";
@@ -67,11 +67,11 @@ export const menuItems = [
     title: "My Profile",
     link: "/profile",
   },
-  {
+  /*  {
     icon: FaUserCircle,
     title: "Edit Profile",
     link: "/edit-profile",
-  },
+  }, */
   {
     icon: FaShoppingBag,
     title: "My Orders",

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, IconButton, Typography } from "@material-tailwind/react";
 import { CartState } from "./Context";
 
-const InputAmountButton = ({ label, desc }) => {
+const InputAmountButton = ({ label, desc, product }) => {
   const { state, dispatch } = CartState();
+  // const qty = state.cart
+  console.log(product);
 
-  
+  /*  const [productInc, setProductInc] = useState({
+    product,
+    qty: 
+  }) */
   const [value, setValue] = React.useState(1);
+  /* (e) =>
+    dispatch({
+      type: "CHANGE_CART_QUANTITY",
+      payload: {
+        id: state.product.id,
+        qty: Number(e.target.value),
+      },
+    }) */
+  const handleChangeCartQty = () => {};
 
   return (
     <div className="w-80">
@@ -21,15 +35,9 @@ const InputAmountButton = ({ label, desc }) => {
           type="number"
           color="blue"
           value={value}
-          onChange={(e) =>
-            dispatch({
-              type: "CHANGE_CART_QUANTITY",
-              payload: {
-                id: state.product.id,
-                qty: Number(e.target.value),
-              },
-            })
-          }
+          onChange={() => {
+            handleChangeCartQty;
+          }}
           className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           labelProps={{
             className: "before:content-none after:content-none",

@@ -9,7 +9,7 @@ const Hero = () => {
     gsap.from(".hero-btn", { opacity: 0, y: 20, duration: 1.5, delay: 1 });
   }, []);
   return (
-    <section className="  hero relative p-0  min-h-[70dvh] overflow-hidden lg:max-h-dvh flex flex-col gap-5 items-start justify-center ">
+    <section className="  hero p-0  min-h-[70dvh] overflow-hidden lg:max-h-dvh flex flex-col gap-5 items-start justify-center ">
       <video autoPlay muted loop className=" hidden xl:block h-full w-full">
         <source src={heroVid} type="video/mp4" />
         Your browser does not support the video tag.

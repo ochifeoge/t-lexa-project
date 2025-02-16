@@ -60,6 +60,7 @@ const SingleProductPage = () => {
 
         <div className="flex flex-col md:flex-row items-center">
           <InputAmountButton
+            product={product}
             label={"  Select Amount"}
             desc=" Adjust the amount using the + and - controls."
           />

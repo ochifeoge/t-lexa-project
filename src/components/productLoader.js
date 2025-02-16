@@ -8,10 +8,10 @@ export const productLoader = async ({ params }) => {
     const productSnapshot = await getDoc(productRef);
 
     if (productSnapshot.exists()) {
-      console.log(productSnapshot.data());
       return productSnapshot.data();
     } else {
       console.log("No such document!");
+      alert("no, such document exist");
     }
   } catch (error) {
     console.log("error fetching product", error);

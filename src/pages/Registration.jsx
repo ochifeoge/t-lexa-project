@@ -121,7 +121,7 @@ const Registration = () => {
         </Typography>
         <Typography color="gray" className="mt-4 text-start font-normal">
           Already have an account?{" "}
-          <Link to="/login" className="font-medium text-gray-900">
+          <Link to="/login" className="font-bold text-gray-900">
             Sign In
           </Link>
         </Typography>
@@ -267,7 +267,7 @@ const Registration = () => {
             Sign up
           </Button>
 
-          <Button
+          {/*    <Button
             size="lg"
             variant="outlined"
             color="blue-gray"
@@ -278,7 +278,7 @@ const Registration = () => {
               className="h-6 w-6"
             />
             Continue with Google
-          </Button>
+          </Button> */}
         </form>
       </Card>
     </section>

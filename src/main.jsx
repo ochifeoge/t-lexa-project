@@ -102,7 +102,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/t-lexa-project",
+    basename: import.meta.env.BASE_URL,
   }
 );
 
