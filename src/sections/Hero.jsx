@@ -1,8 +1,11 @@
 import { heroVid } from "../components/details";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   useGSAP(() => {
     gsap.from(".hero-heading", { opacity: 0, y: 20, duration: 1.5 });
     gsap.from(".hero-text", { opacity: 0, y: 20, duration: 1.5, delay: 0.5 });
@@ -24,6 +27,7 @@ const Hero = () => {
         </p>
         <span className="hero-btn">
           <button
+            onClick={() => navigate("/shop")}
             className={` bg-red-500  flex justify-center items-center gap-2 px-7 py-4 border leading-none rounded-full text-white border-red-600 group hover:bg-red-600 transition`}>
             Shop Now
           </button>
@@ -40,6 +44,7 @@ const Hero = () => {
         </p>
         <span className="hero-btn">
           <button
+            onClick={() => navigate("/shop")}
             className={` bg-red-500  flex justify-center items-center gap-2 px-7 py-4 border leading-none rounded-full text-white border-red-600 group hover:bg-red-600 transition`}>
             Shop Now
           </button>

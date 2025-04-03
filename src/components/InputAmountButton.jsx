@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input, IconButton, Typography } from "@material-tailwind/react";
 import { CartState } from "./Context";
 
 const InputAmountButton = ({ label, desc, product }) => {
   const { state, dispatch } = CartState();
-  // const qty = state.cart
-  console.log(product);
 
-  /*  const [productInc, setProductInc] = useState({
-    product,
-    qty: 
-  }) */
-  const [value, setValue] = React.useState(1);
-  /* (e) =>
+  const [value, setValue] = useState(Number(product.qty) || 0);
+  // const [onchangeVal , setOnchangeVal] = useState(value)
+  const handleChange = (e) => {
+    e.target.value = value;
+  };
+  const handleIncreaseByOne = () => {
     dispatch({
-      type: "CHANGE_CART_QUANTITY",
-      payload: {
-        id: state.product.id,
-        qty: Number(e.target.value),
-      },
-    }) */
-  const handleChangeCartQty = () => {};
+      type: "INCREASE_BY_ONE",
+      payload: product,
+    });
+    setValue((cur) => (cur >= product.quantity ? cur : cur + 1));
+    console.log(product);
+  };
+  const handleDecreaseByOne = () => {
+    dispatch({
+      type: "DECREASE_BY_ONE",
+      payload: product,
+    });
+    setValue((cur) => (cur <= 1 ? 1 : cur - 1));
+  };
 
   return (
     <div className="w-80">
@@ -34,10 +38,8 @@ const InputAmountButton = ({ label, desc, product }) => {
         <Input
           type="number"
           color="blue"
+          onChange={handleChange}
           value={value}
-          onChange={() => {
-            handleChangeCartQty;
-          }}
           className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-blue-500 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           labelProps={{
             className: "before:content-none after:content-none",
@@ -50,7 +52,7 @@ const InputAmountButton = ({ label, desc, product }) => {
           <IconButton
             size="sm"
             className="rounded"
-            onClick={() => setValue((cur) => (cur === 0 ? 0 : cur - 1))}>
+            onClick={() => handleDecreaseByOne()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -63,7 +65,7 @@ const InputAmountButton = ({ label, desc, product }) => {
             size="sm"
             className="rounded"
             onClick={() => {
-              setValue((cur) => cur + 1);
+              handleIncreaseByOne();
             }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

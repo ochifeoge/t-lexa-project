@@ -1,13 +1,59 @@
+import { doc, updateDoc } from "firebase/firestore";
 import { CartState } from "../../components/Context";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { db } from "../../components/Firebase";
+import { toast } from "react-toastify";
 const UsersProfile = () => {
   const { userDetails } = CartState();
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(userDetails);
-  const [name, setName] = useState("ochife");
-  const [callNumber, setCallNumber] = useState("0909662652");
-  const [email, setEmail] = useState("ochife@oge.com");
+  const [name, setName] = useState(userDetails?.name);
+  const [phoneNumber, setPhoneNumber] = useState(userDetails?.phoneNumber);
   const [error, setError] = useState(null);
+
+  // states for editing
+
+  const [edit, setEdit] = useState(false);
+
+  const nameRef = useRef("");
+
+  const updateName = async (e) => {
+    e.preventDefault();
+    nameRef.current.innerText = "changing...";
+    try {
+      const docRef = doc(db, "users", userDetails.id);
+      await updateDoc(docRef, {
+        name,
+      });
+      toast.success("Name updated successfully");
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error updating Name");
+    } finally {
+      nameRef.current.innerText = "save";
+    }
+  };
+
+  const phoneNumberRef = useRef("");
+  const updatePhoneNumber = async (e) => {
+    e.preventDefault();
+    phoneNumberRef.current.innerText = "changing...";
+    try {
+      const docRef = doc(db, "users", userDetails.id);
+      await updateDoc(docRef, {
+        phoneNumber,
+      });
+      toast.success("phoneNumber updated successfully");
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error updating phoneNumber");
+    } finally {
+      phoneNumberRef.current.innerText = "save";
+    }
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    setEdit((prev) => !prev);
+  };
   return (
     <>
       <section>
@@ -25,15 +71,25 @@ const UsersProfile = () => {
                   className="block text-sm font-medium text-gray-700">
                   Name
                 </label>
-                <input
-                  type="text"
-                  id="profile-name"
-                  onChange={(e) => setName(e.target.value)}
-                  value={userDetails?.name}
-                  required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter profile name"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="profile-name"
+                    onChange={edit ? (e) => setName(e.target.value) : undefined}
+                    value={name}
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter profile name"
+                  />
+                  {edit && (
+                    <button
+                      ref={nameRef}
+                      onClick={(e) => updateName(e)}
+                      className="absolute   right-0 bg-blue-500 text-white rounded-lg px-4 py-3">
+                      Save
+                    </button>
+                  )}
+                </div>
               </div>
               {/* ========================== PHONE Number================== */}
               <div>
@@ -42,57 +98,36 @@ const UsersProfile = () => {
                   className="block text-sm font-medium text-gray-700">
                   Call Number
                 </label>
-                <input
-                  type="tel"
-                  id="profile-number"
-                  onChange={(e) => setCallNumber(e.target.value)}
-                  value={userDetails?.phoneNumber}
-                  required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter price"
-                />
+                <div className="relative">
+                  <input
+                    type="tel"
+                    id="profile-number"
+                    onChange={
+                      edit ? (e) => setPhoneNumber(e.target.value) : undefined
+                    }
+                    value={phoneNumber}
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter Call Number"
+                  />
+                  {edit && (
+                    <button
+                      onClick={(e) => updatePhoneNumber(e)}
+                      className="absolute   right-0 bg-blue-500 text-white rounded-lg px-4 py-3"
+                      ref={phoneNumberRef}>
+                      save
+                    </button>
+                  )}
+                </div>
               </div>
               {/* =======================CATERGORIES====================== */}
-              <div>
-                <label
-                  htmlFor="profile-email"
-                  className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="profile-email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={userDetails?.email}
-                  required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter mail"
-                />
-              </div>
-              {/* ============================QUANTITY================================= */}
-
-              {/*====================== Upload image ======================*/}
-              {/*  <div>
-              <label
-                htmlFor="selectImg"
-                className="block text-sm font-medium text-gray-700">
-                Choose an Image
-              </label>
-              <input
-                type="file"
-                onChange={ProductImgHandler}
-                required
-                value={productImg}
-                id="selectImg"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div> */}
 
               <button
-                onClick={() => {}}
-                type="submit"
+                onClick={(e) => {
+                  handleEdit(e);
+                }}
                 className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Edit profile
+                {edit ? "Switch to view mode" : "Switch to edit mode"}
               </button>
             </form>
             {error && <span className="text-red-500 text-lg">{error}</span>}

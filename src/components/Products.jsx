@@ -20,7 +20,7 @@ const Products = ({ label = "finest from our shop", isHome = false }) => {
 
       <div className=" px-4 w-full lg:w-11/12 mx-auto grid grid-cols-2 lg:grid-cols-4 items-end  gap-6">
         {isLoading ? (
-          <div className="flex flex-col md:flex-row flex-wrap">
+          <div className="flex lg:items-center flex-wrap">
             <Skelenton />
             <Skelenton />
             <Skelenton />

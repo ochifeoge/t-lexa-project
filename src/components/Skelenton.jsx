@@ -1,9 +1,8 @@
-import React from "react";
 import { Typography } from "@material-tailwind/react";
 
 const Skelenton = () => {
   return (
-    <div className="flex animate-pulse flex-wrap items-center gap-8">
+    <div className="basis-full md:basis-5/12 lg:basis-1/5  flex animate-pulse flex-wrap items-center gap-8">
       <div className="grid h-36 w-36 place-items-center rounded-lg bg-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"

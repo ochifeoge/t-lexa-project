@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { CartState } from "./Context";
 import { toast } from "react-toastify";

@@ -11,6 +11,7 @@ const Cart = () => {
   const { state, dispatch } = CartState();
 
   const cart = state.cart;
+  console.log(cart);
 
   const user = state.user;
 
@@ -22,7 +23,7 @@ const Cart = () => {
         <h2 className="text-2xl">Shopping Cart</h2>
 
         {cart.length ? (
-          cart.map((cartItem) => (
+          cart?.map((cartItem) => (
             <div
               className="flex gap-3 flex-col md:flex-row md:items-center my-5"
               key={cartItem.id}>
@@ -40,7 +41,7 @@ const Cart = () => {
                 </span>
                 <div className="flex flex-col md:flex-row md:items-center">
                   <p>Quantity: {cartItem.qty}</p>
-                  <InputAmountButton />
+                  <InputAmountButton product={cartItem} />
                   <Button
                     color="red"
                     onClick={() => {

@@ -1,6 +1,5 @@
-import { Select, Option } from "@material-tailwind/react";
 import Button from "../components/Button";
-import InputAmountButton from "../components/InputAmountButton";
+
 import { useLoaderData } from "react-router-dom";
 
 const SingleProductPage = () => {
@@ -59,11 +58,6 @@ const SingleProductPage = () => {
         </div>
 
         <div className="flex flex-col md:flex-row items-center">
-          <InputAmountButton
-            product={product}
-            label={"  Select Amount"}
-            desc=" Adjust the amount using the + and - controls."
-          />
           <Button label="Add to cart" />
         </div>
         <div className="my-5">

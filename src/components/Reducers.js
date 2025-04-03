@@ -48,6 +48,29 @@ export const cartReducer = (state, action) => {
         cart: [],
       };
 
+    case "INCREASE_BY_ONE":
+      return {
+        ...state,
+        cart: state.cart.map((item) => {
+          return action.payload.id === item.id
+            ? {
+                ...item,
+                qty:
+                  item.qty >= item.quantity ? item.qty : action.payload.qty + 1,
+              }
+            : item;
+        }),
+      };
+    case "DECREASE_BY_ONE":
+      return {
+        ...state,
+        cart: state.cart.map((item) => {
+          return action.payload.id === item.id
+            ? { ...item, qty: item.qty <= 1 ? 1 : item.qty - 1 }
+            : item;
+        }),
+      };
+
     case "CHANGE_CART_QUANTITY":
       return {
         ...state,
