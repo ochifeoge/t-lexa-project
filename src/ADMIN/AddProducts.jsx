@@ -1,5 +1,5 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { db, storage } from "../components/Firebase";
 import { v4 } from "uuid";
 import { addDoc, collection } from "firebase/firestore";
@@ -10,34 +10,69 @@ const AddProducts = () => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(100);
   const [productCatagory, setProductCatagory] = useState("");
-  const [productQuantity, setProductQuantity] = useState(0);
+  const [productQuantity, setProductQuantity] = useState();
   const [productDescription, setProductDescription] = useState("");
-  const [productImg, setProductImg] = useState(undefined);
+  const [productImg, setProductImg] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedColors, setSelectedColors] = useState([]);
+
+  const [showSizes, setShowSizes] = useState(false);
+  const [sizes, setSizes] = useState({
+    S: 0,
+    M: 0,
+    L: 0,
+    XL: 0,
+  });
+
+  // preventing memories leak by revoking the object urls
+  useEffect(() => {
+    return () => {
+      imagePreview.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imagePreview]);
 
   //  reseting the img field in the viewport
-  const fileImgRef = useRef();
+  /* const fileImgRef = useRef(); */
 
-  // ensure file type is an image and also type is a png or jpg image fmt
-  const imgTypes = ["image/png", "image/jpeg"];
+  // handle the image upload
   const ProductImgHandler = (e) => {
-    let selectedFile = e.target.files[0];
+    let selectedFiles = [...e.target.files];
 
-    if (selectedFile && imgTypes.includes(selectedFile.type)) {
-      setError("");
-      setProductImg(selectedFile);
-    } else {
-      setProductImg(undefined);
-      setError("please upload a valid image ending with '.png' or '.jpg'");
+    const previewUrls = selectedFiles.map((file) => URL.createObjectURL(file));
+
+    setProductImg((prev) => [...prev, ...selectedFiles]);
+    setImagePreview((prev) => [...prev, ...previewUrls]);
+  };
+
+  // handle sizes
+
+  const handleSizeChange = (size, value) => {
+    setSizes((prevSizes) => ({
+      ...prevSizes,
+      [size]: value,
+    }));
+  };
+
+  // handle color selection and deletion
+  const handleColorSelection = (e) => {
+    const color = e.target.value;
+    if (!selectedColors.includes(color)) {
+      setSelectedColors((prev) => [...prev, color]);
     }
+  };
+
+  const handleRemoveColor = (color) => {
+    const newColors = selectedColors.filter((c) => c !== color);
+    setSelectedColors(newColors);
   };
 
   // ensure price is not <= 0;
   const handlePrice = (e) => {
     let setPrice = e.target.value;
     if (setPrice <= 0) {
-      setProductPrice(null);
+      setProductPrice("");
       setError("price cannot be less than or equal to zero");
     } else {
       setProductPrice(setPrice);
@@ -45,25 +80,34 @@ const AddProducts = () => {
     }
   };
 
-  // submitting the form
+  // function to push to image to storage
 
+  const uploadToFirebaseStorage = async (file) => {
+    const imgRef = ref(storage, `productImages/${file.name + v4()}`);
+
+    await uploadBytes(imgRef, file);
+
+    const fileUrl = await getDownloadURL(imgRef);
+
+    return fileUrl;
+  };
+
+  // submitting the form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const imgRef = ref(storage, `product-images/${productImg.name + v4()}`);
-
     try {
       // upload the image
-      await uploadBytes(imgRef, productImg);
+      const uploadImgPromise = productImg.map((file) =>
+        uploadToFirebaseStorage(file)
+      );
 
-      // get the download url
-
-      const imageUrl = await getDownloadURL(imgRef);
+      const uploadedImgUrls = await Promise.all(uploadImgPromise);
 
       // push to the database
 
-      const productCollectionRef = collection(db, "products");
+      const productCollectionRef = collection(db, "products2");
 
       const newProduct = {
         name: productName,
@@ -71,7 +115,9 @@ const AddProducts = () => {
         categories: productCatagory,
         quantity: productQuantity,
         price: productPrice,
-        image: imageUrl,
+        images: uploadedImgUrls,
+        colors: selectedColors,
+        sizes: sizes,
         inStock: true,
       };
 
@@ -83,9 +129,16 @@ const AddProducts = () => {
       setProductCatagory("");
       setProductQuantity("");
       setProductDescription("");
-      setProductImg(undefined);
-      fileImgRef.current.value = ""; /* reset image on the viewport */
-      setProductCatagory("");
+      setProductImg([]);
+      setImagePreview([]);
+      setSizes({
+        S: 0,
+        M: 0,
+        L: 0,
+        XL: 0,
+      });
+      setSelectedColors([]); /* reset image on the viewport */
+      /* fileImgRef.current.value = "";  */
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error("Failed to upload image. Please try again.");
@@ -103,7 +156,10 @@ const AddProducts = () => {
         <Spinners loading={loading} />
       ) : (
         <div className="w-full max-w-screen-lg mx-auto p-6 bg-white shadow-md rounded-lg">
-          <form className="space-y-4" autoComplete="off">
+          <form
+            className="space-y-4"
+            autoComplete="off"
+            onSubmit={handleSubmit}>
             {/* ===================PRODUCT NAME============== */}
 
             <div>
@@ -139,6 +195,52 @@ const AddProducts = () => {
                 placeholder="Enter price"
               />
             </div>
+            {/* select sizes */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setShowSizes((prev) => !prev);
+              }}>
+              Add sizes
+            </button>
+            {showSizes && (
+              <>
+                <div>
+                  <label>Small (S)</label>
+                  <input
+                    type="number"
+                    placeholder="Enter size"
+                    value={sizes.S}
+                    onChange={(e) => handleSizeChange("S", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Medium (M)</label>
+                  <input
+                    type="number"
+                    value={sizes.M}
+                    onChange={(e) => handleSizeChange("M", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Large (L)</label>
+                  <input
+                    type="number"
+                    value={sizes.L}
+                    onChange={(e) => handleSizeChange("L", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Extra Large (XL)</label>
+                  <input
+                    type="number"
+                    value={sizes.XL}
+                    onChange={(e) => handleSizeChange("XL", e.target.value)}
+                  />
+                </div>
+              </>
+            )}
+
             {/* =======================CATERGORIES====================== */}
             <div>
               <label
@@ -170,7 +272,10 @@ const AddProducts = () => {
                 value={productQuantity}
                 required
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter quantity"
+                placeholder={
+                  "total quantity = " +
+                  +(sizes.S + sizes.M + sizes.L + sizes.XL)
+                }
               />
             </div>
             {/* =======================DESCRIPTION========================== */}
@@ -198,18 +303,100 @@ const AddProducts = () => {
               </label>
               <input
                 type="file"
+                accept="image/*"
+                multiple
                 onChange={ProductImgHandler}
                 required
-                ref={fileImgRef}
+                /*  ref={fileImgRef} */
                 id="selectImg"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            <div>
+              {imagePreview.length > 0 && (
+                <>
+                  <div className="flex gap-4 flex-wrap mt-4">
+                    {imagePreview.map((src, index) => (
+                      <img
+                        key={index}
+                        src={src}
+                        alt={`Preview ${index + 1}`}
+                        className="w-24 h-24 object-cover rounded border"
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                    onClick={() => {
+                      imagePreview.forEach((url) => URL.revokeObjectURL(url));
+                      setProductImg([]);
+                      setImagePreview([]);
+                    }}>
+                    Clear
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* colors */}
+            <div>
+              <label
+                htmlFor="product-colors"
+                className="block text-sm font-medium text-gray-700">
+                Available Colors
+              </label>
+              <select
+                id="product-colors"
+                value=""
+                onChange={(e) => handleColorSelection(e)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="" disabled>
+                  Select colors available
+                </option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="Brown">Brown</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Grey">Grey</option>
+                <option value="White">White</option>
+                <option value="Yellow">Yellow</option>
+              </select>
+              {/* Display selected colors */}
+              {selectedColors.length > 0 && (
+                <div className="mt-2">
+                  <strong>Selected Colors:</strong>
+                  <ul>
+                    {selectedColors.map((color, index) => (
+                      <>
+                        <div className="flex items-center gap">
+                          <li key={index}>{color}</li>
+                          <span
+                            style={{
+                              backgroundColor: color,
+                            }}
+                            className="w-5 h-5 rounded-full"></span>
+
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveColor(color)}
+                            className="ml-2 text-red-500 hover:text-red-700">
+                            Remove
+                          </button>
+                        </div>
+                      </>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onClick={(e) => handleSubmit(e)}>
+              className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
               Submit
             </button>
           </form>

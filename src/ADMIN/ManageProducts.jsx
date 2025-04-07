@@ -91,11 +91,11 @@ const ManageProducts = () => {
         <button
           onClick={() => handleViewProduct(params.row.id)}
           style={{
-            padding: "5px 10px",
+            padding: "3px 10px",
             backgroundColor: "skyblue",
             color: "white",
             border: "none",
-            borderRadius: "30px",
+            borderRadius: "10px",
             cursor: "pointer",
           }}>
           View
@@ -111,11 +111,11 @@ const ManageProducts = () => {
         <button
           onClick={() => handleDelete(params.row.id)}
           style={{
-            padding: "5px 10px",
+            padding: "3px 10px",
             backgroundColor: "red",
             color: "white",
             border: "none",
-            borderRadius: "30px",
+            borderRadius: "10px",
             cursor: "pointer",
           }}>
           Delete
@@ -128,7 +128,7 @@ const ManageProducts = () => {
   const rows = products.map((product) => ({
     id: product.id,
     name: product.name,
-    images: product.image,
+    images: product.images[0],
     description: product.description,
     categories: product.categories,
     quantity: product.quantity,
@@ -138,7 +138,7 @@ const ManageProducts = () => {
   const paginationModel = { page: 0, pageSize: 10 };
   return (
     <div>
-      <Paper sx={{ height: "80vh", width: "100%", overflowX: "auto" }}>
+      <Paper sx={{ height: "85vh", width: "100vw", overflowX: "auto" }}>
         <DataGrid
           rows={rows}
           columns={columns}

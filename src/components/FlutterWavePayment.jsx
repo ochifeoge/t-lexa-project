@@ -4,6 +4,7 @@ import { CartState } from "./Context";
 import { db } from "./Firebase";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const FlutterWavePayment = () => {
   const { state, dispatch, userDetails } = CartState();
@@ -39,7 +40,7 @@ const FlutterWavePayment = () => {
     ...config,
     text: "Pay with Flutterwave!",
     callback: async (response) => {
-      if (response.status === "completed") {
+      if (response.status === "completed" && user.uid) {
         const orderRef = doc(
           db,
           "orders",
@@ -66,15 +67,18 @@ const FlutterWavePayment = () => {
           },
           products: cart.map((item) => ({
             product_id: item.id,
-            product_img: item.image,
+            product_img: item.images[0],
             name: item.name,
             quantity: item.qty,
             price: item.price,
+            selectedColor: item.selectedColor,
+            selectedSize: item.selectedSize,
           })),
 
           user_id: user.uid,
         };
         try {
+          console.log(order);
           await setDoc(orderRef, order);
 
           const userRef = doc(db, "users", user.uid);
@@ -88,7 +92,9 @@ const FlutterWavePayment = () => {
           dispatch({
             type: "EMPTY_CART",
           });
+
           navigate("/shop");
+          toast.success("Payment successful! Order saved.");
         } catch (error) {
           console.error("Failed to save order:", error);
           console.error("error message:", error.message);

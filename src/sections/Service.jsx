@@ -12,19 +12,19 @@ const serviceItems = [
     icon: truk,
     label: "Free Shipping",
     subText:
-      "lsjsld shkdlksd dshldslse ahelen ln slsnslj eisddnklnp sp eroi rrrn rrr",
+      "Enjoy free nationwide delivery on all orders — no minimum spend required.",
   },
   {
     icon: shild,
     label: "secure payment",
     subText:
-      "lsjsld shkdlksd dshldslse ahelen ln slsnslj eisddnklnp sp eroi rrrn rrr",
+      "Your transactions are protected with end-to-end encryption and trusted gateways.",
   },
   {
     icon: hand,
     label: "love to help you",
     subText:
-      "lsjsld shkdlksd dshldslse ahelen ln slsnslj eisddnklnp sp eroi rrrn rrr",
+      "Our support team is always available to assist you with any questions or concerns.",
   },
 ];
 const Service = () => {

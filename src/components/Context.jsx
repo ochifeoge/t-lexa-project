@@ -32,7 +32,7 @@ const Context = ({ children }) => {
   /////////FETCH PRODUCT AND PASS IT TO THE LOCAL STATE ///////////////////
 
   const fetchProducts = async () => {
-    const productCollectionRef = collection(db, "products");
+    const productCollectionRef = collection(db, "products2");
     const productSnapshot = await getDocs(productCollectionRef);
     return productSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   };

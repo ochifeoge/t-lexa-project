@@ -6,29 +6,28 @@ export const cartReducer = (state, action) => {
         user: action.payload,
       };
 
-    /* case "SET_PRODUCTS":
-      return {
-        ...state,
-        products: action.payload,
-      }; */
-
     case "ADD_TO_CART": {
       const itemExists = state.cart.find(
-        (item) => item.id === action.payload.id
+        (item) =>
+          item.id === action.payload.id &&
+          (!item.selectedSize ||
+            item.selectedSize === action.payload.selectedSize)
       );
 
       if (itemExists) {
-        // If item already exists, increase quantity
+        // If item already exists with same size, increase quantity
         return {
           ...state,
           cart: state.cart.map((item) =>
-            item.id === action.payload.id
+            item.id === action.payload.id &&
+            (!item.selectedSize ||
+              item.selectedSize === action.payload.selectedSize)
               ? { ...item, qty: item.qty + 1 }
               : item
           ),
         };
       } else {
-        // If item does not exist, add it with qty: 1
+        // If item does not exist or has different size, add it with qty: 1
         return {
           ...state,
           cart: [...state.cart, { ...action.payload, qty: 1 }],
@@ -39,7 +38,11 @@ export const cartReducer = (state, action) => {
     case "REMOVE_FROM_CART":
       return {
         ...state,
-        cart: state.cart.filter((c) => c.id !== action.payload.id),
+        cart: state.cart.filter(
+          (c) =>
+            c.id !== action.payload.id ||
+            (c.selectedSize && c.selectedSize !== action.payload.selectedSize)
+        ),
       };
 
     case "EMPTY_CART":
@@ -52,7 +55,9 @@ export const cartReducer = (state, action) => {
       return {
         ...state,
         cart: state.cart.map((item) => {
-          return action.payload.id === item.id
+          return action.payload.id === item.id &&
+            (!item.selectedSize ||
+              item.selectedSize === action.payload.selectedSize)
             ? {
                 ...item,
                 qty:
@@ -65,7 +70,9 @@ export const cartReducer = (state, action) => {
       return {
         ...state,
         cart: state.cart.map((item) => {
-          return action.payload.id === item.id
+          return action.payload.id === item.id &&
+            (!item.selectedSize ||
+              item.selectedSize === action.payload.selectedSize)
             ? { ...item, qty: item.qty <= 1 ? 1 : item.qty - 1 }
             : item;
         }),

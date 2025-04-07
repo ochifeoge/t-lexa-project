@@ -29,7 +29,7 @@ const Cart = () => {
               key={cartItem.id}>
               <div className="w-28 ">
                 <img
-                  src={cartItem.image}
+                  src={cartItem.images[0]}
                   alt={cartItem.name}
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -37,8 +37,13 @@ const Cart = () => {
               <div>
                 <h3 className="text-xl">{cartItem.name}</h3>
                 <span>
-                  price: <span>&#8358;</span> {cartItem?.price * cartItem?.qty}
+                  price: <span>&#8358;</span>{" "}
+                  {new Intl.NumberFormat().format(
+                    cartItem?.price * cartItem?.qty
+                  )}
                 </span>
+                <span className="mx-3">size: {cartItem.selectedSize}</span>
+                <span>color: {cartItem.selectedColor}</span>
                 <div className="flex flex-col md:flex-row md:items-center">
                   <p>Quantity: {cartItem.qty}</p>
                   <InputAmountButton product={cartItem} />
@@ -71,13 +76,15 @@ const Cart = () => {
       <div className="flex flex-col items-center">
         <h3 className="text-xl flex items-center gap-1">
           Subtotal ({cart.length}) :<span>&#8358;</span>
-          {cart
-            .reduce(
-              (totalAmount, cartItem) =>
-                totalAmount + cartItem.price * cartItem.qty,
-              0
-            )
-            .toFixed(2)}
+          {new Intl.NumberFormat().format(
+            cart
+              .reduce(
+                (totalAmount, cartItem) =>
+                  totalAmount + cartItem.price * cartItem.qty,
+                0
+              )
+              .toFixed(2)
+          )}
         </h3>
         {user ? (
           !showNumber && (

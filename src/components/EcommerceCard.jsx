@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import Button from "./Button";
 
 import {} from "react-icons/fa6";
 
@@ -18,7 +17,7 @@ export function EcommerceCard({ product }) {
       <Link className="p-0" to={`/products/${product.id}`}>
         <CardHeader shadow={true} floated={false} className="h-36  md:h-64">
           <img
-            src={product.image}
+            src={product?.images[0]}
             loading="lazy"
             alt={product.name}
             className={`h-full w-full object-cover rounded-md`}
@@ -29,20 +28,20 @@ export function EcommerceCard({ product }) {
         </CardHeader>
       </Link>
       <CardBody className="md:p-2 ">
-        <div className="mb-2 flex flex-col gap-2 md:gap-0 md:flex-row md:items-center md:justify-between">
+        <div className="mb-2 flex flex-col gap-2 md:gap-0 ">
           <Typography color="blue-gray" className="font-medium">
             {product.name}
           </Typography>
           <Typography
-            color="blue-gray"
-            className="font-medium flex items-center gap-1">
-            <span>&#8358;</span> {product.price}
+            color=""
+            className="font-bold flex items-center gap-1 text-red-500 ">
+            <span>&#8358;</span> {new Intl.NumberFormat().format(product.price)}
           </Typography>
         </div>
       </CardBody>
-      <CardFooter className="pt-1 px-2 ">
-        <Button label="Add to cart" product={product} />
-      </CardFooter>
+      {/* <CardFooter className="pt-1 px-2 ">
+        
+      </CardFooter> */}
     </Card>
   );
 }

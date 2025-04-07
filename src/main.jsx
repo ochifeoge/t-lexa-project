@@ -24,8 +24,8 @@ import AdminRoute from "./ADMIN/AdminRoute.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import Orders from "./pages/user/Orders.jsx";
 import UsersProfile from "./pages/user/UsersProfile.jsx";
-import EditUserProfile from "./pages/user/EditUserProfile.jsx";
 import ErrorPageAdmin from "./ADMIN/ErrorPageAdmin.jsx";
+import Inbox from "./pages/user/Inbox.jsx";
 
 const router = createBrowserRouter(
   [
@@ -76,8 +76,8 @@ const router = createBrowserRouter(
           element: <Orders />,
         },
         {
-          path: "/edit-profile",
-          element: <EditUserProfile />,
+          path: "/inbox",
+          element: <Inbox />,
         },
         {
           path: "/addproducts",
